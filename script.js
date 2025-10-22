@@ -10,21 +10,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let localSubmissions = []; // 서버에서 불러온 전체 데이터
   
-  // ⭐️ Chart.js 관련 변수 모두 제거됨
-
-  // ⭐️ keyMap 수정: 누락된 필드(Mood, Reaction) 추가 
+  // ⭐️ 모든 설문 항목 레이블 정의 (최신 폼의 필드 이름)
   const keyMap = {
     hasPet: "반려동물 보유",
     region: "지역",
     regionOther: "직접 입력 지역",
-    priorityCriteria: "병원 선택 기준",
-    concernAndFeature: "불만/필요 기능",
+    priorityCriteria: "병원 선택 기준", // ⭐️ 표시할 항목
+    concernAndFeature: "최대 지불 의향",
     priority1: "1순위 정보",
     priority2: "2순위 정보",
-    priceRange: "최대 지불 의향",
-    Mood: "기분/상태", 
-    Reaction: "반응/지불의향"
+    priceRange: "불만/필요 기능" // ⭐️ 표시할 항목
   };
+  
+  // ⭐️ 이전/구식 필드 이름을 최신 필드 이름에 매핑
+  const legacyMap = {
+    Mood: "priorityCriteria",
+    Reaction: "priceRange",
+    type: "hasPet"
+  };
+  
+  // ⭐️ 표시할 항목만 필터링하는 배열 (요청에 따라 2개만 남김)
+  const displayKeys = ["priorityCriteria", "priceRange"];
 
   /**
    * 1. 서버에서 최신 데이터를 가져와 localSubmissions를 갱신하고, 화면을 다시 그리는 핵심 함수
@@ -95,14 +101,31 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
     
-    localSubmissions.slice().reverse().forEach((sub) => {
+    // 최근 10개만 표시
+    localSubmissions.slice().reverse().slice(0, 10).forEach((sub, index) => {
       const card = document.createElement("div");
-      card.className = "record";
-      let html = Object.entries(sub)
-        .filter(([k,v]) => !(k === "regionOther" && sub.region !== "기타") && v !== "")
-        // ⭐️ keyMap에 있는 키만 필터링하여 유효한 데이터만 표시
-        .filter(([k, v]) => keyMap[k] !== undefined) 
-        .map(([k,v]) => `<div><strong>${keyMap[k]||k}:</strong> ${v}</div>`)
+      card.className = "record fade-in"; // ⭐️ 애니메이션 클래스 추가
+      card.style.setProperty('--delay', `${index * 0.05}s`); // ⭐️ 순차 애니메이션 딜레이
+
+      // ⭐️ displayKeys에 정의된 2개 항목만 순회
+      let html = displayKeys
+          .map(k => {
+              const label = keyMap[k];
+              let value = sub[k];
+              
+              // 값이 없는 경우, 이전 필드에서 대체할 값이 있는지 확인
+              if (!value || value === "") {
+                  const legacyKey = Object.keys(legacyMap).find(lk => legacyMap[lk] === k);
+                  if (legacyKey && sub[legacyKey]) {
+                      value = sub[legacyKey]; // 이전 데이터로 대체
+                  }
+              }
+              
+              // 최종 값이 없거나 빈 문자열이면 "응답 없음"을 표시
+              const displayValue = (value && value !== "" && value !== " ") ? value : "응답 없음";
+              
+              return `<div class="record-item"><strong>${label}:</strong> <span>${displayValue}</span></div>`;
+          })
         .join("");
         
       if (!html) html = "<div>제출된 정보 없음</div>";
@@ -111,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // ⭐️ 4. renderCharts 함수 제거
+  // 4. renderCharts 함수 제거 (기존 유지)
 
   // 5. 탭 클릭 이벤트 (탭 전환 및 submissions 탭 클릭 시 서버 데이터 재요청)
   tabBtns.forEach(btn => {
