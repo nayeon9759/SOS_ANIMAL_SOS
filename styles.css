@@ -45,11 +45,11 @@ body{
 .form-card{
     background:rgba(255,255,255,0.05);
     padding:12px;
-    margin-bottom:24px; /* 이전 수정: 질문 박스 간격 넓힘 */
+    margin-bottom:24px; /* 질문 박스 간격 유지 (24px) */
     border-radius:8px;
     border:1px solid rgba(255,255,255,0.1)
 }
-/* ⭐️ 질문 텍스트 아래 간격을 넓힘 (6px -> 12px) */
+/* ⭐️ 질문 텍스트 아래 간격을 넓힘 (12px로 유지) */
 .q{font-weight:700;margin-bottom:12px} 
 .required{color:var(--primary)}
 
@@ -103,7 +103,7 @@ select,textarea,input[type="text"]{
 .video-container{
   position: relative;
   width: 100%;
-  /* 유튜브 화면 크기 살짝 줄임 */
+  /* 유튜브 화면 크기 살짝 줄임 (50%로 유지) */
   padding-bottom: 50%; 
   height: 0;
   overflow: hidden;
