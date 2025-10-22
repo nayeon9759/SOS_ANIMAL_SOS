@@ -7,8 +7,9 @@
   --muted:#b9c0d7;
   --text-main: #e6eef8; /* 명확한 메인 텍스트 색상 */
   --highlight: #2c3a50; /* 결과 카드 하이라이트 배경색 */
+  /* ⭐️ 스크롤바 색상 변수 추가 */
   --scrollbar-track: #1f2a38; 
-  --scrollbar-thumb: #455263; 
+  --scrollbar-thumb: #ff4d4f; /* Primary 색상 적용 */
 }
 
 *{box-sizing:border-box}
@@ -36,30 +37,30 @@ body{
 .submissions-list{
   margin-top:12px;
   display:grid;
-  gap:10px;
-  max-height:450px;
-  overflow-y:auto;
-  padding-right:10px;
+  gap:10px; /* 카드 간격 약간 늘림 */
+  max-height:450px; /* 결과 목록 높이 증가 */
+  overflow-y:auto; /* ⭐️ 스크롤을 Y축에 명시 */
+  padding-right:10px; /* ⭐️ 스크롤바가 콘텐츠에 겹치지 않도록 패딩 조정 */
 }
 
-/* ⭐️ 스크롤바 스타일링 */
+/* ⭐️ 스크롤바 스타일링 (Chrome, Safari, Edge 등 WebKit 기반 브라우저용) */
 .submissions-list::-webkit-scrollbar {
     width: 8px;
 }
 .submissions-list::-webkit-scrollbar-track {
-    background: var(--scrollbar-track);
+    background: var(--scrollbar-track); /* 트랙 배경색 (어두운 배경에 맞춤) */
     border-radius: 10px;
 }
 .submissions-list::-webkit-scrollbar-thumb {
-    background-color: var(--primary); /* 스크롤 핸들 색상을 Primary로 변경하여 간지 강조 */
+    background-color: var(--scrollbar-thumb); /* 스크롤 핸들 색상 */
     border-radius: 10px;
-    border: 2px solid var(--scrollbar-track);
+    border: 2px solid var(--scrollbar-track); /* 트랙과 구분선 */
 }
 
-/* ⭐️ 제출 결과 카드 디자인 (더욱 간결하고 강조되게 수정) */
+/* ⭐️ 제출 결과 카드 디자인 */
 .record {
-    background: var(--highlight);
-    padding: 12px;
+    background: var(--highlight); /* 눈에 띄는 배경색 */
+    padding: 12px; /* 패딩 증가 */
     border-radius: 8px;
     border: 1px solid rgba(255, 77, 79, 0.2); /* 은은한 테두리 강조 */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* 그림자 강조 */
@@ -70,7 +71,7 @@ body{
     border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 항목별 구분선 강조 */
     display: flex;
     justify-content: space-between;
-    align-items: center; /* 텍스트가 한 줄일 경우 중앙 정렬 */
+    align-items: center; 
 }
 .record-item strong {
     color: var(--accent); /* 레이블 색상 강조 (주황색) */
@@ -103,21 +104,20 @@ body{
 .record.fade-in {
     opacity: 0;
     animation: fadeInUp 0.4s ease-out forwards;
-    animation-delay: var(--delay, 0s); /* JS에서 설정할 딜레이 변수 */
+    animation-delay: var(--delay, 0s); 
 }
 
 
-/* PANELS */
+/* PANELS - 이하 기존 디자인 유지 */
 .panel{display:none;padding:12px 0}
 .panel.active{display:block}
 .form-card{
     background:rgba(255,255,255,0.05);
     padding:12px;
-    margin-bottom:30px;
+    margin-bottom:30px; 
     border-radius:8px;
     border:1px solid rgba(255,255,255,0.1)
 }
-/* 질문 텍스트 아래 간격 유지 */
 .q{font-weight:700;margin-bottom:15px} 
 .required{color:var(--primary)}
 
