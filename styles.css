@@ -1,0 +1,136 @@
+/* 기존 디자인 그대로 유지 */
+:root{
+  --bg:#0f1724;
+  --primary:#ff4d4f;
+  --accent:#ff9f43;
+  --card:#1f2a38;
+  --muted:#b9c0d7;
+  --text-main: #e6eef8; /* 명확한 메인 텍스트 색상 */
+}
+
+*{box-sizing:border-box}
+/* body에 기본 배경과 텍스트 색상 강제 적용 */
+body{
+    margin:0; 
+    font-family: "Noto Sans KR", sans-serif; 
+    background:var(--bg); 
+    color:var(--text-main); 
+    padding:20px;
+}
+.wrap{max-width:900px;margin:0 auto;border-radius:12px;background:var(--card);padding:16px;box-shadow:0 6px 20px rgba(0,0,0,0.5);}
+
+/* HERO */
+.hero{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.hero-inner h1{margin:0;color:var(--primary)}
+.lead{margin:4px 0 0;color:var(--muted);font-size:14px}
+
+/* TABS */
+.tabs{display:flex; gap:6px; margin:12px 0;}
+.tab-btn{flex:1;padding:8px 10px;border-radius:8px;background:var(--card);border:1px solid rgba(255,255,255,0.1);color:var(--muted);cursor:pointer;transition:0.2s}
+.tab-btn.active{background:var(--primary);color:white;box-shadow:0 4px 12px rgba(255,77,79,0.4);}
+
+/* submissions */
+.submissions-list{
+  margin-top:12px;
+  display:grid;
+  gap:8px;
+  max-height:300px; 
+  overflow:auto;   
+  padding-right:4px; 
+}
+
+/* PANELS */
+.panel{display:none;padding:12px 0}
+.panel.active{display:block}
+.form-card{
+    background:rgba(255,255,255,0.05);
+    padding:12px;
+    margin-bottom:24px; /* 이전 수정: 질문 박스 간격 넓힘 */
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.1)
+}
+/* ⭐️ 질문 텍스트 아래 간격을 넓힘 (6px -> 12px) */
+.q{font-weight:700;margin-bottom:12px} 
+.required{color:var(--primary)}
+
+.options.inline label{margin-right:16px}
+.options.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.options label{display:flex;align-items:center;padding:8px;border-radius:6px;background:rgba(255,255,255,0.02);cursor:pointer;transition:0.2s}
+.options input{margin-right:6px}
+
+/* 입력 필드 색상 명확화 */
+select,textarea,input[type="text"]{
+    width:100%;
+    padding:8px;
+    border-radius:6px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.1);
+    color:var(--text-main); 
+    font-size:14px;
+}
+
+/* Buttons */
+.btn{padding:8px 12px;border-radius:6px;font-weight:700;cursor:pointer;border:none;transition:0.2s}
+.btn.primary{background:var(--primary);color:white;box-shadow:0 4px 12px rgba(255,77,79,0.4);}
+.btn.primary:hover{transform:scale(1.05)}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.1);}
+.btn.small{padding:4px 8px;font-size:12px}
+
+/* submissions */
+.record{background:rgba(255,255,255,0.02);padding:8px;border-radius:6px}
+
+/* guide */
+.guide-card{padding:10px;background:rgba(255,255,255,0.01);border-radius:6px;border:1px solid rgba(255,255,255,0.1)}
+
+/* footer */
+.footer{margin-top:12px;text-align:center;font-size:12px;color:var(--muted)}
+
+/* YouTube 영상 섹션 */
+.video-guide{
+  margin-top: 20px;
+  padding: 16px;
+  background: rgba(255, 77, 79, 0.05); 
+  border-radius: 8px;
+  border: 1px solid var(--primary);
+}
+.guide-title{
+  font-size: 16px;
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.video-container{
+  position: relative;
+  width: 100%;
+  /* 유튜브 화면 크기 살짝 줄임 */
+  padding-bottom: 50%; 
+  height: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.video-container iframe{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.video-caption{
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* 기존 chart 관련 스타일 제거 */
+.charts h4{
+  font-size: 16px;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+.charts canvas{
+  display: none; 
+}
+
+@media(max-width:640px){.options.grid{grid-template-columns:1fr}}
