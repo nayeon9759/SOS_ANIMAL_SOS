@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // ⭐️ Chart.js 관련 변수 모두 제거됨
 
+  // ⭐️ keyMap 수정: 누락된 필드(Mood, Reaction) 추가 
   const keyMap = {
     hasPet: "반려동물 보유",
     region: "지역",
@@ -20,7 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
     concernAndFeature: "불만/필요 기능",
     priority1: "1순위 정보",
     priority2: "2순위 정보",
-    priceRange: "최대 지불 의향"
+    priceRange: "최대 지불 의향",
+    Mood: "기분/상태", 
+    Reaction: "반응/지불의향"
   };
 
   /**
@@ -39,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (Array.isArray(data)) {
         localSubmissions = data; 
         renderSubmissions(); // 목록 갱신
-        // ⭐️ renderCharts 호출 제거
       } else {
         submissionsList.innerHTML = '<div class="placeholder">데이터 로딩 실패: 서버 응답 형식이 올바르지 않습니다.</div>';
       }
@@ -98,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = "record";
       let html = Object.entries(sub)
         .filter(([k,v]) => !(k === "regionOther" && sub.region !== "기타") && v !== "")
-        // ⭐️ 임시로 Reaction 등의 알 수 없는 키를 필터링합니다.
+        // ⭐️ keyMap에 있는 키만 필터링하여 유효한 데이터만 표시
         .filter(([k, v]) => keyMap[k] !== undefined) 
         .map(([k,v]) => `<div><strong>${keyMap[k]||k}:</strong> ${v}</div>`)
         .join("");
